@@ -5,6 +5,7 @@ require_once PHPCAS_PATH;
 
 define('CAS_VER',CAS_VERSION_2_0);
 
+$CAS_SETUP = false;
 
 final class CASServer {
 
@@ -30,6 +31,10 @@ final class CASServer {
     {
         error_log(print_r(debug_backtrace(), TRUE));
 
+        global $CAS_SETUP;
+
+        if ($CAS_SETUP) return;
+
         phpCAS::setDebug();
         phpCAS::client(CAS_VER, qa_opt('cas_host'), (int)qa_opt('cas_login_port'), qa_opt('cas_url_context'));
 
@@ -40,6 +45,8 @@ final class CASServer {
         else {
             phpCAS::setNoCasServerValidation();
         }
+
+        $CAS_SETUP = true;
     }
 
     public function isAuthenticated()
