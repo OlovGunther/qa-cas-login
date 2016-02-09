@@ -22,11 +22,9 @@ class cas_login {
     // a cookie or session variable (dependent on 'remember me' setting
     function check_login() {
 
-        var_dump('check_login');
         if ($this->cas->isAuthenticated()) {
-            $handle = $this->cas->getUser();
 
-            var_dump("phpCas::getUser() -> $handle");
+            $handle = $this->cas->getUser();
 
             $source = 'cas';
 
@@ -49,12 +47,10 @@ class cas_login {
 
 
     function login_html($tourl, $context) {
-        var_dump('login_html');
 
 
         if ($this->cas->isAuthenticated()) {
-            var_dump('ok');
-            var_dump($this->cas->getUser());
+
         } else {
             $this->cas->forceAuthentication();
         }

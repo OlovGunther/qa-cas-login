@@ -28,6 +28,8 @@ final class CASServer {
      */
     private function __construct()
     {
+        error_log(print_r(debug_backtrace(), TRUE));
+
         phpCAS::setDebug();
         phpCAS::client(CAS_VER, qa_opt('cas_host'), (int)qa_opt('cas_login_port'), qa_opt('cas_url_context'));
 
