@@ -22,8 +22,6 @@ class cas_login {
     // a cookie or session variable (dependent on 'remember me' setting
     function check_login() {
 
-        error_log('check login');
-
         if ($this->cas->isAuthenticated()) {
 
             $handle = $this->cas->getUser();
@@ -51,11 +49,7 @@ class cas_login {
     function login_html($tourl, $context) {
 
 
-//        if ($this->cas->isAuthenticated()) {
-
-//        } else {
-            $this->cas->forceAuthentication();
-//        }
+        $this->cas->forceAuthentication();
 
     }
 
@@ -106,7 +100,8 @@ class cas_login {
                 $users = qa_db_user_find_by_handle($identifier);
                 if (count($users)==1) {
                     qa_db_user_login_sync(false);
-                    qa_set_logged_in_user($users[0]['userid'], $identifier, false, $source);
+                    qa_set_logged_in_user($users[0], $identifier, false, $source);
+                    qa_db_user_login_add($users[0], $source, $identifier);
                     return;
                 }
 

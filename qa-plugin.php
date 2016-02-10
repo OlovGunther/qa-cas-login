@@ -24,7 +24,6 @@ qa_register_plugin_module('login','cas-login.php','cas_login','CAS Login');
 qa_register_plugin_layer('cas-login-layer.php','CAS Login Layer');
 qa_register_plugin_module('page','cas-login-logout-page.php','cas_logout_process','CAS Logout Process');
 qa_register_plugin_module('module', 'cas-login-admin-form.php', 'cas_login_admin_form', 'CAS Login');
-qa_register_plugin_module('filter', 'cas-filter.php', 'cas_filter', 'CAS filters');
 /*
   Omit PHP closing tag to help avoid accidental output
 */

@@ -10,10 +10,10 @@ $CAS_SETUP = false;
 final class CASServer {
 
     /**
-     * Call this method to get singleton
-     *
-     * @return CASServer
-     */
+    * Call this method to get singleton
+    *
+    * @return CASServer
+    */
     public static function Instance()
     {
         static $inst = null;
@@ -24,20 +24,20 @@ final class CASServer {
     }
 
     /**
-     * Private ctor so nobody else can instance it
-     *
-     */
-     private function __construct()
-     {
+    * Private ctor so nobody else can instance it
+    *
+    */
+    private function __construct()
+    {
 
-     }
+    }
 
-     static $initialized = false;
+    static $initialized = false;
     private function init()
     {
         if (static::$initialized) return;
 
-        phpCAS::setDebug();
+        // phpCAS::setDebug();
         phpCAS::client(CAS_VER, 'localhost.lan', 443, 'cas');
 
         // SSL certification validation
@@ -75,7 +75,6 @@ final class CASServer {
         qa_clear_session_cookie();
         qa_clear_session_user();
 
-        header('Location: '.qa_opt('cas_logout'));
-        phpCAS::logout(array('url'=>$url));
+        //header('Location: '.qa_opt('cas_logout'));
+        phpCAS::logout(array('url'=>$url));    }
     }
-}
