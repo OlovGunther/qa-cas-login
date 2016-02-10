@@ -27,16 +27,18 @@ final class CASServer {
      * Private ctor so nobody else can instance it
      *
      */
-    private function __construct()
+     private function __construct()
+     {
+
+     }
+
+     static $initialized = false;
+    private function init()
     {
-        error_log(print_r(debug_backtrace(), TRUE));
-
-        global $CAS_SETUP;
-
-        if ($CAS_SETUP) return;
+        if (static::$initialized) return;
 
         phpCAS::setDebug();
-        phpCAS::client(CAS_VER, qa_opt('cas_host'), (int)qa_opt('cas_login_port'), qa_opt('cas_url_context'));
+        phpCAS::client(CAS_VER, 'localhost.lan', 443, 'cas');
 
         // SSL certification validation
         if (qa_opt('cas_cert_url') != "") {
@@ -46,28 +48,30 @@ final class CASServer {
             phpCAS::setNoCasServerValidation();
         }
 
-        $CAS_SETUP = true;
+        static::$initialized = true;
     }
 
     public function isAuthenticated()
     {
+        $this->init();
         return phpCAS::isAuthenticated();
     }
 
     public function getUser()
     {
+        $this->init();
         return phpCAS::getUser();
     }
 
     public function forceAuthentication()
     {
+        $this->init();
         phpCAS::forceAuthentication();
     }
 
     public function logout($url)
     {
-        var_dump($_SESSION);
-
+        $this->init();
         qa_clear_session_cookie();
         qa_clear_session_user();
 

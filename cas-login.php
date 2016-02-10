@@ -22,6 +22,8 @@ class cas_login {
     // a cookie or session variable (dependent on 'remember me' setting
     function check_login() {
 
+        error_log('check login');
+
         if ($this->cas->isAuthenticated()) {
 
             $handle = $this->cas->getUser();
@@ -49,11 +51,11 @@ class cas_login {
     function login_html($tourl, $context) {
 
 
-        if ($this->cas->isAuthenticated()) {
+//        if ($this->cas->isAuthenticated()) {
 
-        } else {
+//        } else {
             $this->cas->forceAuthentication();
-        }
+//        }
 
     }
 
