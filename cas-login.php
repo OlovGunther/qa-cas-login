@@ -72,7 +72,7 @@ class cas_login {
     {
         if (qa_to_override(__FUNCTION__)) { $args=func_get_args(); return qa_call_override(__FUNCTION__, $args); }
 
-        require_once QA_INCLUDE_DIR.'db/users.php';
+        require_once QA_INCLUDE_DIR.'qa-db-users.php';
 
         $users=qa_db_user_login_find($source, $identifier);
         $countusers=count($users);
@@ -84,7 +84,7 @@ class cas_login {
         qa_set_logged_in_user($users[0]['userid'], $users[0]['handle'], false, $source);
 
         else { // create and log in user
-            require_once QA_INCLUDE_DIR.'app/users-edit.php';
+            require_once QA_INCLUDE_DIR.'qa-app-users-edit.php';
 
             qa_db_user_login_sync(true);
 
