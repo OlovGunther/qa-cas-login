@@ -27,15 +27,11 @@ class cas_logout_process {
     } // end function suggest_requests
 
     function match_request($request) {
-        if ($request=='auth/logout') return true;
-
-        return false;
+        return $request == 'auth/logout';
     } // end function match_request
 
-    function process_request($request) {
-
+    function process_request($tourl) {
         $this->cas->logout($tourl);
-
         return null;
     } // end function process_request
 

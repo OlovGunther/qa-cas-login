@@ -1,13 +1,24 @@
 <?php
 
 define('PHPCAS_PATH','/usr/share/php/CAS.php');
+
 require_once PHPCAS_PATH;
 
-define('CAS_VER',CAS_VERSION_2_0);
+switch (qa_opt('cas_version')) {
+    case 1:
+        define('CAS_VER',CAS_VERSION_1_0);
+        break;
+    case 2:
+        define('CAS_VER',CAS_VERSION_2_0);
+        break;
+    case 3:
+    default:
+        define('CAS_VER',CAS_VERSION_3_0);
+        break;
+}
 
-$CAS_SETUP = false;
-
-final class CASServer {
+final class CASServer
+{
 
     /**
     * Call this method to get singleton
@@ -35,10 +46,12 @@ final class CASServer {
     static $initialized = false;
     private function init()
     {
-        if (static::$initialized) return;
+        if (static::$initialized) {
+            return;
+        }
 
         // phpCAS::setDebug();
-        phpCAS::client(CAS_VER, 'localhost.lan', 443, 'cas');
+        phpCAS::client(CAS_VER, qa_opt('cas_host'), 443, 'cas');
 
         // SSL certification validation
         if (qa_opt('cas_cert_url') != "") {
@@ -63,6 +76,12 @@ final class CASServer {
         return phpCAS::getUser();
     }
 
+    public function getServerLoginURL()
+    {
+        $this->init();
+        return phpCAS::getServerLoginURL();
+    }
+
     public function forceAuthentication()
     {
         $this->init();
@@ -76,5 +95,6 @@ final class CASServer {
         qa_clear_session_user();
 
         //header('Location: '.qa_opt('cas_logout'));
-        phpCAS::logout(array('url'=>$url));    }
+        phpCAS::logout(array('url'=>$url));
     }
+}

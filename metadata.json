@@ -1,0 +1,10 @@
+{
+    "name": "CAS Plugin",
+    "description": "Plugin to allow CAS authentication",
+    "version": "1.0",
+    "date": "2017-06-26",
+    "author": "Olov Günther-Hanssen",
+    "author_uri": "https://github.com/OlovGunther/",
+    "license": "Free",
+    "min_q2a": "1.4"
+}
